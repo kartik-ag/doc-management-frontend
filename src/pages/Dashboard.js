@@ -52,10 +52,11 @@ const Dashboard = () => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const [selectedDocument, setSelectedDocument] = useState(null);
+  const [error, setError] = useState('');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { documents, loading, error } = useSelector((state) => state.documents);
+  const { documents, loading, error: reduxError } = useSelector((state) => state.documents);
   const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
@@ -68,7 +69,9 @@ const Dashboard = () => {
       const response = await documentsAPI.getDocuments();
       dispatch(fetchDocumentsSuccess(response.data));
     } catch (error) {
-      dispatch(fetchDocumentsFailure(error.response?.data?.detail || 'Failed to fetch documents'));
+      const errorMessage = error.message || 'Failed to fetch documents';
+      dispatch(fetchDocumentsFailure(errorMessage));
+      setError(errorMessage);
     }
   };
 
@@ -91,7 +94,9 @@ const Dashboard = () => {
       setSelectedFile(null);
       setDocumentTitle('');
     } catch (error) {
-      dispatch(uploadDocumentFailure(error.response?.data?.detail || 'Upload failed'));
+      const errorMessage = error.message || 'Upload failed';
+      dispatch(uploadDocumentFailure(errorMessage));
+      setError(errorMessage);
     }
   };
 
@@ -101,7 +106,9 @@ const Dashboard = () => {
       await documentsAPI.deleteDocument(id);
       dispatch(deleteDocumentSuccess(id));
     } catch (error) {
-      dispatch(deleteDocumentFailure(error.response?.data?.detail || 'Delete failed'));
+      const errorMessage = error.message || 'Delete failed';
+      dispatch(deleteDocumentFailure(errorMessage));
+      setError(errorMessage);
     }
   };
 
@@ -112,7 +119,8 @@ const Dashboard = () => {
       const response = await aiAPI.askQuestion(selectedDocument.id, question);
       setAnswer(response.data.answer);
     } catch (error) {
-      setAnswer('Failed to get answer. Please try again.');
+      const errorMessage = error.message || 'Failed to get answer';
+      setAnswer(`Error: ${errorMessage}`);
     }
   };
 
