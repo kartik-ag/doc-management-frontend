@@ -68,3 +68,37 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+# Document Management Portal Frontend
+
+## Environment Setup
+
+1. Copy the example environment file:
+```bash
+cp .env.example .env
+```
+
+2. Update the `.env` file with your configuration:
+```
+REACT_APP_API_URL=https://doc-management-backend.onrender.com/api
+```
+
+## Development
+
+1. Install dependencies:
+```bash
+npm install
+```
+
+2. Start the development server:
+```bash
+npm start
+```
+
+## Production Deployment
+
+The application is configured to use the production API URL by default. For local development, you can override this by setting the `REACT_APP_API_URL` environment variable.
+
+## Environment Variables
+
+- `REACT_APP_API_URL`: The URL of your backend API (defaults to production URL)
