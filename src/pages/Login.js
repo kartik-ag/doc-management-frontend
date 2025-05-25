@@ -17,7 +17,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: '',
+    username: '',
     password: '',
   });
   const dispatch = useDispatch();
@@ -42,7 +42,7 @@ const Login = () => {
       localStorage.setItem('token', token);
   
       // Optionally, save the refresh token
-      // localStorage.setItem('refresh', response.data.refresh);
+      localStorage.setItem('refresh', response.data.refresh);
   
       // Optionally, fetch user profile
       const userResponse = await authAPI.getCurrentUser();
@@ -73,12 +73,12 @@ const Login = () => {
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
             autoFocus
-            value={formData.email}
+            value={formData.username}
             onChange={handleChange}
           />
           <TextField
